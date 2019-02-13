@@ -99,11 +99,18 @@ class EventDashboard extends Component {
 
   handleCreateEvent = newEvent => {
     newEvent.id = cuid()
-    newEvent.PhotoURL = './assets/user.png'
+    newEvent.hostPhotoURL = './assets/user.png'
     const updatedEvents = [...this.state.events, newEvent]
     this.setState({
       events: updatedEvents,
       isOpen: false
+    })
+  }
+
+  handleDeleteEvent = eventId => () => {
+    const updatedEvents = this.state.events.filter(e => e.id !== eventId)
+    this.setState({
+      events: updatedEvents
     })
   }
 
@@ -113,6 +120,7 @@ class EventDashboard extends Component {
       <Grid>
         <Grid.Column width={10}>
           <EventList 
+            deleteEvent={this.handleDeleteEvent}
             onEventOpen={this.handleOpenEvent} 
             events={this.state.events} />
         </Grid.Column>
